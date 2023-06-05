@@ -13,7 +13,7 @@ Validates input formulas for invalid characters and unclosed brackets.
 Start the server by running the server.py file.
 
 python server.py
-The server will listen for HTTP requests on http://localhost:8000.
+The server will listen for HTTP requests on http://localhost:8001.
 
 Run the client.py file to send a formula to the server.
 
