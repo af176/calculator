@@ -28,6 +28,5 @@ Valid formulas:
 3 * A5 + 2 * 2Z + 7 (Result: 34)
 Invalid formulas:
 
-# (Error: Invalid characters in the formula)
 A1 + 2 (Error: The brackets are not closed)
 
