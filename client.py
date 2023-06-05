@@ -1,14 +1,26 @@
+from flask import Flask, render_template, request
 import requests
 
-while True:
-    formula = input("Enter the formula (or 'q' to quit): ")
+app = Flask(__name__)
 
-    if formula == 'q':
-        break
+@app.route("/", methods=["GET", "POST"])
+def calculator():
+    if request.method == "POST":
+        formula = request.form.get("formula")
 
-    response = requests.post("http://localhost:8000/calculate", json={"formula": formula})
+        if formula == 'q':
+            return "You have chosen to quit. Goodbye!"
 
-    if response.status_code == 200:
-        print("Result:", response.text)
+        response = requests.post("http://localhost:8000/calculate", json={"formula": formula})
+
+        if response.status_code == 200:
+            result = response.text
+        else:
+            result = "Error: " + response.text
+
+        return render_template("result.html", formula=formula, result=result)
     else:
-        print("Error
+        return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(debug=True, port=8001)
