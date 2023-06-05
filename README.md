@@ -1,4 +1,5 @@
-HTTP Calculator
+**HTTP Calculator
+
 This repository contains an HTTP calculator application that allows clients to send formulas to a server using the HTTP protocol and receive the calculated result. The server evaluates the formulas based on a set of valid characters: numbers [0-9], +, -, *, /, A, Z.
 
 
@@ -7,7 +8,8 @@ Handles basic arithmetic operations: addition, subtraction, multiplication, and 
 Supports parentheses-like characters (A and Z) for grouping expressions.
 Validates input formulas for invalid characters and unclosed brackets.
 
-Usage
+**Usage
+
 Start the server by running the server.py file.
 
 python server.py
@@ -20,12 +22,14 @@ Enter the desired formula when prompted. The client will send an HTTP request to
 
 The server will evaluate the formula and return the calculated result or an error message as the response.
 
-Examples
+**Examples
+
 Valid formulas:
 
 1 + 2 (Result: 3)
 2 * (3 + 4) (Result: 14)
 3 * A5 + 2 * 2Z + 7 (Result: 34)
+
 Invalid formulas:
 
 A1 + 2 (Error: The brackets are not closed)
