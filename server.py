@@ -24,16 +24,10 @@ def calculate_formula(formula):
                     operand2 = stack.pop()
                     operator = stack.pop()
                     operand1 = stack.pop()
-                    if operator == '+':
-                        stack.append(operand1 + operand2)
-                    elif operator == '-':
-                        stack.append(operand1 - operand2)
-                    elif operator == '*':
-                        stack.append(operand1 * operand2)
-                    elif operator == '/':
-                        if operand2 == 0:
-                            return "Invalid formula: Division by zero"
-                        stack.append(operand1 / operand2)
+                    result = perform_operation(operator, operand1, operand2)
+                    if result is None:
+                        return "Invalid formula: Division by zero"
+                    stack.append(result)
                 if 'A' in stack:
                     while stack[-1] != 'A' and len(stack) != 0:
                         stack2 = [stack.pop()]
@@ -48,32 +42,41 @@ def calculate_formula(formula):
     if 'A' in stack or 'Z' in stack:
         return error_message
 
-    for item in stack:
-        if len(stack) == 1:
-            return stack[0]
+    return evaluate_stack(stack)
+
+
+def perform_operation(operator, operand1, operand2):
+    if operator == '+':
+        return operand1 + operand2
+    elif operator == '-':
+        return operand1 - operand2
+    elif operator == '*':
+        return operand1 * operand2
+    elif operator == '/':
+        if operand2 == 0:
+            return None  # Division by zero error
+        return operand1 / operand2
+
+
+def evaluate_stack(stack):
+    while len(stack) > 1:
         if len(stack) == 2:
             a = stack.pop()
             op = stack.pop()
             if op == '-':
-                return - a
-        if len(stack) >= 3:
+                stack.append(-a)
+        elif len(stack) >= 3:
             a = stack.pop()
             op = stack.pop()
             b = stack.pop()
-            if op == '+':
-                stack.append(a + b)
-            elif op == '-':
-                stack.append(a - b)
-            elif op == '*':
-                stack.append(a * b)
-            elif op == '/':
-                if b == 0:
-                    return "Invalid formula: Division by zero"
-                stack.append(a / b)
+            result = perform_operation(op, b, a)
+            if result is None:
+                return "Invalid formula: Division by zero"
+            stack.append(result)
         else:
             return "Invalid formula: Invalid brackets"
 
-    return stack[0];
+    return stack[0]
 
 
 @app.route("/calculate", methods=["POST"])
