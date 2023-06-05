@@ -1,13 +1,14 @@
 import requests
-import json
 
-formula = input("Enter the formula: ")
+while True:
+    formula = input("Enter the formula (or 'q' to quit): ")
 
-# Prepare the payload data with the formula
-payload = {"formula": formula}
+    if formula == 'q':
+        break
 
-# Send the formula to the server as JSON data
-response = requests.post("http://localhost:8000/calculate", json=payload)
+    response = requests.post("http://localhost:8000/calculate", json={"formula": formula})
 
-# Print the server's response
-print(response.text)
+    if response.status_code == 200:
+        print("Result:", response.text)
+    else:
+        print("Error
