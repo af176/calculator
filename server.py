@@ -2,6 +2,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
+
 def calculate_formula(formula):
     formula = formula.replace(" ", "")  # Remove spaces from the formula
 
@@ -33,10 +34,9 @@ def calculate_formula(formula):
                         if operand2 == 0:
                             return "Invalid formula: Division by zero"
                         stack.append(operand1 / operand2)
-                if'A' in stack:
-                    while stack[-1]!='A' and len(stack)!=0:
-                        stack2=[]
-                        stack2.append(stack.pop())
+                if 'A' in stack:
+                    while stack[-1] != 'A' and len(stack) != 0:
+                        stack2 = [stack.pop()]
                     stack.pop()
                     while len(stack2) != 0:
                         stack.append(stack2.pop())
@@ -49,14 +49,14 @@ def calculate_formula(formula):
         return error_message
 
     for item in stack:
-        if len(stack)==1:
-            return stack[0];
-        if len(stack)==2:
-            a=stack.pop()
-            op=stack.pop()
-            if op=='-':
+        if len(stack) == 1:
+            return stack[0]
+        if len(stack) == 2:
+            a = stack.pop()
+            op = stack.pop()
+            if op == '-':
                 return - a
-        if len(stack)>=3:
+        if len(stack) >= 3:
             a = stack.pop()
             op = stack.pop()
             b = stack.pop()
@@ -71,10 +71,9 @@ def calculate_formula(formula):
                     return "Invalid formula: Division by zero"
                 stack.append(a / b)
         else:
-           return "Invalid formula: Invalid brackets"
+            return "Invalid formula: Invalid brackets"
 
     return stack[0];
-
 
 
 @app.route("/calculate", methods=["POST"])
